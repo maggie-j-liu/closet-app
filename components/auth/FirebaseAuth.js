@@ -29,7 +29,7 @@ const firebaseAuthConfig = {
         signInSuccessWithAuthResult: async ({ user }, redirectUrl) => {
             const userData = mapUserData(user)
             setUserCookie(userData)
-            WriteToCloudFirestore()
+            addUser(userData)
         }
     }
 }

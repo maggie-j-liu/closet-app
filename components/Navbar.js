@@ -13,9 +13,24 @@ const Navbar = () => {
         <Link href={"/"}>
           <a className={"font-bold text-indigo-900"}>Clear Closet</a>
         </Link>
-        <Link href={"/closet"}>
+        
+        {user && (<Link href={{
+          pathname: '/closet/[userId]',
+          query: {
+            userId: user.id
+          }
+        }}>
+
           <a>My Closet</a>
         </Link>
+        )}
+        {!user && (<Link href={{
+          pathname: '/closet',
+        }}>
+
+          <a>My Closet</a>
+        </Link>
+        )}
       </div>
       {!user && (
         <div>
