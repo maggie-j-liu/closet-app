@@ -1,8 +1,7 @@
 import React from "react";
 import { useTags } from "./TagsContext";
 
-const Tags = () => {
-  const { tags, setTags } = useTags();
+const Tags = ({ tags, setTags }) => {
   console.log("tags", tags);
   const [currTag, setCurrTag] = React.useState("");
   const handleChange = (e) => {

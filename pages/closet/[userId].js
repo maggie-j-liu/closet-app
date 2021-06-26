@@ -9,14 +9,14 @@ import "firebase/firestore";
 import { useRouter } from "next/router";
 import Tags from "../../components/Tags";
 import { useTags } from "../../components/TagsContext";
-import TagSearch from "../../components/TagSearch"
+import TagSearch from "../../components/TagSearch";
 // var user_id = null;
 function siml(a, b) {
   var res = 0;
   for (var i = 0; i < b.length; i++) {
-      if (a.indexOf(b[i]) != -1) {
-          res ++;
-      }
+    if (a.indexOf(b[i]) != -1) {
+      res++;
+    }
   }
   return res;
 }
@@ -31,18 +31,22 @@ const Closet = ({ userId, userCloset }) => {
       <NotLoggedInMessage>Log in to access your closet</NotLoggedInMessage>
     );
   }
-  const { tags, setTags } = useTags();
+  const [tags, setTags] = React.useState([]);
   // setTags([]);
   console.log(userCloset);
-  for (var j = 0; j < userCloset.length-1; j ++) 
-  for (var i = 0; i < userCloset.length-1; i ++)  {
-    if (siml(userCloset[i].tags, tags) > siml(userCloset[i+1].tags, tags)) {
-      const x = userCloset[i];
-      userCloset[i] = userCloset[i+1];
-      userCloset[i+1] = x;
+  for (var j = 0; j < userCloset.length - 1; j++)
+    for (var i = 0; i < userCloset.length - 1; i++) {
+      if (siml(userCloset[i].tags, tags) > siml(userCloset[i + 1].tags, tags)) {
+        const x = userCloset[i];
+        userCloset[i] = userCloset[i + 1];
+        userCloset[i + 1] = x;
+      }
     }
-  }
-  firebase.firestore().collection("users").doc(user.id).update({id: user.id, name: user.name, email: user.email})
+  firebase
+    .firestore()
+    .collection("users")
+    .doc(user.id)
+    .update({ id: user.id, name: user.name, email: user.email });
   // no support for sharing closets yet
   if (userId != user.id) {
     router.replace({
@@ -58,7 +62,9 @@ const Closet = ({ userId, userCloset }) => {
   // })
   return (
     <div>
-      <div><Tags /></div>
+      <div>
+        <Tags tags={tags} setTags={setTags} />
+      </div>
       <div
         className={
           "bg-indigo-50 w-full h-72 flex items-center justify-between px-20"
@@ -67,7 +73,7 @@ const Closet = ({ userId, userCloset }) => {
         <h1 className={"text-5xl font-bold"}>My Closet</h1>
         <div>Icon of closet here</div>
       </div>
-      
+
       <UploadModal />
       <ImageGrid images={userCloset} />
     </div>

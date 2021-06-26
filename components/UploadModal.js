@@ -153,7 +153,7 @@ const UploadModal = () => {
                     onChange={handleImageChange}
                   />
                   <img src={image} className={"w-3/4 m-auto"} />
-                  <Tags />
+                  <Tags tags={tags} setTags={setTags} />
                   <div>
                     <button
                       type="submit"
@@ -171,7 +171,6 @@ const UploadModal = () => {
                       <span className={"ml-4 text-indigo-800"}>
                         Success! Your image has been uploaded.
                       </span>
-                      
                     )}
                   </div>
 
