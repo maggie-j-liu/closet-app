@@ -36,9 +36,6 @@ const Image = ({ url, tags }) => {
 };
 
 const ImageGrid = ({ images }) => {
-  console.log("images", images);
-  images.reverse();
-  console.log("reversed", images);
   return (
     <div
       className={

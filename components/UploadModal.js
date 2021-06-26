@@ -19,6 +19,7 @@ const UploadModal = () => {
   const { tags, setTags } = useTags();
   const { user } = useUser();
   const router = useRouter();
+  const inputRef = React.useRef();
 
   console.log("tags", tags);
   const closeModal = () => {
@@ -37,6 +38,7 @@ const UploadModal = () => {
   };
 
   const handleImageChange = (event) => {
+    setSuccess(false);
     if (event.target.files?.[0]) {
       setFilename(event.target.files[0].name);
       const reader = new FileReader();
@@ -74,11 +76,8 @@ const UploadModal = () => {
     const firestore = firebase.firestore();
     const ref = firestore.collection("users").doc(user.id);
     const doc = await ref.get();
-    const currentCloset = doc.data().closet;
-    currentCloset.push({
-      url: url,
-      tags: tags,
-    });
+    let currentCloset = doc.data().closet;
+    currentCloset = [{ url: url, tags: tags }, ...currentCloset];
     ref.update({
       closet: currentCloset,
     });
@@ -88,6 +87,7 @@ const UploadModal = () => {
     setTags([]);
     setCanSubmit(false);
     setSuccess(true);
+    inputRef.current.value = "";
   };
 
   return (
@@ -149,10 +149,11 @@ const UploadModal = () => {
                     type="file"
                     accept="image/jpeg, image/png"
                     className={"p-0.5 rounded-md focus-ring w-min"}
+                    ref={inputRef}
                     onChange={handleImageChange}
                   />
                   <img src={image} className={"w-3/4 m-auto"} />
-                  <Tags />
+                  <Tags tags={tags} setTags={setTags} />
                   <div>
                     <button
                       type="submit"
@@ -170,7 +171,6 @@ const UploadModal = () => {
                       <span className={"ml-4 text-indigo-800"}>
                         Success! Your image has been uploaded.
                       </span>
-                      
                     )}
                   </div>
 

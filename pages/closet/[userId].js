@@ -7,8 +7,19 @@ import Loading from "../../components/Loading";
 import firebase from "firebase/app";
 import "firebase/firestore";
 import { useRouter } from "next/router";
-import TagSearch from "../../components/TagSearch"
+import Tags from "../../components/Tags";
+import { useTags } from "../../components/TagsContext";
+import TagSearch from "../../components/TagSearch";
 // var user_id = null;
+function siml(a, b) {
+  var res = 0;
+  for (var i = 0; i < b.length; i++) {
+    if (a.indexOf(b[i]) != -1) {
+      res++;
+    }
+  }
+  return res;
+}
 const Closet = ({ userId, userCloset }) => {
   const { user } = useUser();
   const router = useRouter();
@@ -20,6 +31,28 @@ const Closet = ({ userId, userCloset }) => {
       <NotLoggedInMessage>Log in to access your closet</NotLoggedInMessage>
     );
   }
+  const [tags, setTags] = React.useState([]);
+  // setTags([]);
+  console.log(userCloset);
+  for (var j = 0; j < userCloset.length; j++)
+    for (var i = 0; i < userCloset.length-1; i++) {
+      if (siml(userCloset[i].tags, tags) > siml(userCloset[i + 1].tags, tags)) {
+        const x = userCloset[i];
+        userCloset[i] = userCloset[i + 1];
+        userCloset[i + 1] = x;
+      }
+    }
+  const displayCloset = [];
+  for (var i = 0; i < userCloset.length; i ++) {
+    if (siml(userCloset[i].tags, tags) >= tags.length/2) {
+      displayCloset.push(userCloset[i]);
+    }
+  }
+  firebase
+    .firestore()
+    .collection("users")
+    .doc(user.id)
+    .update({ id: user.id, name: user.name, email: user.email });
   firebase.firestore().collection("users").doc(user.id).update({id: user.id, name: user.name, email: user.email})
   // no support for sharing closets yet
   if (userId != user.id) {
@@ -36,7 +69,6 @@ const Closet = ({ userId, userCloset }) => {
   // })
   return (
     <div>
-      <TagSearch />
       <div
         className={
           "bg-indigo-50 w-full h-72 flex items-center justify-between px-20"
@@ -45,9 +77,12 @@ const Closet = ({ userId, userCloset }) => {
         <h1 className={"text-5xl font-bold"}>My Closet</h1>
         <div>Icon of closet here</div>
       </div>
-      
+
+      <div className={"w-3/4 mx-auto"}>
+        <Tags text={"Search by tags"} tags={tags} setTags={setTags} />
+      </div>
       <UploadModal />
-      <ImageGrid images={userCloset} />
+      <ImageGrid images={displayCloset} />
     </div>
   );
 };
