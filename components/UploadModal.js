@@ -6,6 +6,7 @@ import { useTags } from "./TagsContext";
 import initFirebase from "../firebase/initFirebase";
 import firebase from "firebase/app";
 import { useUser } from "../firebase/useUser";
+import { useRouter } from "next/router";
 
 initFirebase();
 
@@ -16,6 +17,7 @@ const UploadModal = () => {
   const [success, setSuccess] = React.useState(false);
   const { tags, setTags } = useTags();
   const { user } = useUser();
+  const router = useRouter();
 
   console.log("tags", tags);
   const closeModal = () => {
@@ -23,6 +25,9 @@ const UploadModal = () => {
     setImage("");
     setTags([]);
     setSuccess(false);
+    router.replace(router.asPath, router.asPath, {
+      scroll: false,
+    });
   };
   const openModal = () => {
     setIsOpen(true);
@@ -49,14 +54,36 @@ const UploadModal = () => {
     }
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     const storage = firebase.storage();
     const storageRef = storage.ref();
     const userRef = storageRef.child(user.id);
     const imageRef = userRef.child(filename);
-    imageRef.putString(image, "data_url").then((snapshot) => {
-      setSuccess(true);
-    });
+    const snapshot = await imageRef.putString(image, "data_url");
+    const url = await snapshot.ref.getDownloadURL();
+    console.log(url);
+    const firestore = firebase.firestore();
+    const ref = firestore.collection("users").doc(user.id);
+    const doc = await ref.get();
+    if (doc.exists) {
+      ref.update({
+        closet: firebase.firestore.FieldValue.arrayUnion({
+          url: url,
+          tags: tags,
+        }),
+      });
+    } else {
+      ref.set({
+        closet: [
+          {
+            url: url,
+            tags: tags,
+          },
+        ],
+      });
+    }
+    console.log("updated");
+    setSuccess(true);
   };
 
   return (
