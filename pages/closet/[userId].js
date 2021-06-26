@@ -19,6 +19,7 @@ const Closet = ({ userId, userCloset }) => {
       <NotLoggedInMessage>Log in to access your closet</NotLoggedInMessage>
     );
   }
+  firebase.firestore().collection("users").doc(user.id).update({id: user.id, name: user.name, email: user.email})
   // no support for sharing closets yet
   if (userId != user.id) {
     router.replace({
