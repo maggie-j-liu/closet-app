@@ -1,18 +1,20 @@
 import { Dialog, Transition } from "@headlessui/react";
 import React, { Fragment } from "react";
+import Tags from "./Tags";
 const UploadModal = () => {
   const [isOpen, setIsOpen] = React.useState(false);
   const [file, setFile] = React.useState();
+  const [image, setImage] = React.useState();
   const closeModal = () => {
     setIsOpen(false);
+    setImage("");
   };
-
   const openModal = () => {
     setIsOpen(true);
   };
   return (
     <>
-      <div className="fixed inset-0 flex items-center justify-center">
+      <div className="my-8 inset-0 flex items-center justify-center">
         <button
           type="button"
           onClick={openModal}
@@ -68,17 +70,22 @@ const UploadModal = () => {
                   <input
                     type="file"
                     accept="image/jpeg, image/png"
-                    className={"focus:outline-none focus-visible:ring-2 w-min"}
+                    className={"p-0.5 rounded-md focus-ring w-min"}
                     onChange={(e) => {
                       if (e.target.files?.[0]) {
                         setFile(e.target.files[0]);
+                        setImage(URL.createObjectURL(e.target.files[0]));
+                      } else {
+                        setImage("");
                       }
                     }}
                   />
+                  <img src={image} className={"w-3/4 m-auto"} />
+                  <Tags />
                   <div>
                     <button
                       type="submit"
-                      className="bg-blue-100 px-4 py-2 rounded-md"
+                      className="bg-indigo-100 px-4 py-2 rounded-md text-sm font-medium text-indigo-900 hover:bg-indigo-200 focus-ring"
                     >
                       Submit
                     </button>
@@ -86,7 +93,7 @@ const UploadModal = () => {
                   <div className="self-end">
                     <button
                       type="button"
-                      className="inline-flex justify-center px-4 py-2 text-sm font-medium text-blue-900 bg-blue-100 border border-transparent rounded-md hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-blue-500"
+                      className="inline-flex justify-center px-4 py-2 text-sm font-medium text-indigo-900 bg-indigo-100 border border-transparent rounded-md hover:bg-indigo-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-indigo-500"
                       onClick={closeModal}
                     >
                       Close

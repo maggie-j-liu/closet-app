@@ -1,5 +1,6 @@
 import React from "react";
 import UploadModal from "../components/UploadModal";
+import ImageGrid from "../components/ImageGrid";
 
 const Closet = () => {
   return (
@@ -13,6 +14,7 @@ const Closet = () => {
         <div>Icon of closet here</div>
       </div>
       <UploadModal />
+      <ImageGrid images={[]} />
     </div>
   );
 };
