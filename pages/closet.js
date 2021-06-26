@@ -1,8 +1,7 @@
-import Image from "../components/image";
 import React from "react";
+import UploadModal from "../components/UploadModal";
+
 const Closet = () => {
-  const [file, setFile] = React.useState();
-  const [image, setImage] = React.useState();
   return (
     <div>
       <div
@@ -13,16 +12,7 @@ const Closet = () => {
         <h1 className={"text-5xl font-bold"}>My Closet</h1>
         <div>Icon of closet here</div>
       </div>
-      <input
-        type="file"
-        accept="image/jpeg, image/png"
-        onChange={(event) => {
-          console.log(event);
-          setFile(event.target.files[0]);
-          setImage(URL.createObjectURL(event.target.files[0]));
-        }}
-      />
-      <img src={image} />
+      <UploadModal />
     </div>
   );
 };
