@@ -1,8 +1,8 @@
 import React, { Fragment } from "react";
 
 export default function ClothingTest() {
-  /* data */
-  const [file, setFile] = React.useState();
+  /* generated tags */
+  const [tags, setTags] = React.useState([]);
   /* basically extract the image, call the api, and write the
     data in <pre> */
   const read = (event) => {
@@ -24,15 +24,14 @@ export default function ClothingTest() {
           base64: url
         })
        }).then(data => {
-        data.json().then(stuff => {
-          console.log(JSON.stringify(stuff));
-          setFile(JSON.stringify(stuff))
+        data.json().then(newTags => {
+          setTags(newTags);
         })
        })
      }, false);
   }
   return (
-    <div>
+    <div className="px-10">
       <input
         type="file"
         accept="image/jpeg, image/png"
@@ -42,7 +41,13 @@ export default function ClothingTest() {
           read(e);
         }}
       />
-      <pre>{file}</pre>
+      <ul className="list-disc">
+        {
+          tags.map(tag => {
+            return <li> <strong>{tag[0]}</strong> {' '} {tag[1]}</li> 
+          })
+        }
+      </ul>
     </div>
   )
 }
