@@ -3,16 +3,26 @@ import React, { Fragment } from "react";
 import Tags from "./Tags";
 import getImageTags from "../utils/getImageTags";
 import { useTags } from "./TagsContext";
+import initFirebase from "../firebase/initFirebase";
+import firebase from "firebase/app";
+import { useUser } from "../firebase/useUser";
+
+initFirebase();
+
 const UploadModal = () => {
   const [isOpen, setIsOpen] = React.useState(false);
-  const [file, setFile] = React.useState();
   const [image, setImage] = React.useState();
+  const [filename, setFilename] = React.useState("");
+  const [success, setSuccess] = React.useState(false);
   const { tags, setTags } = useTags();
+  const { user } = useUser();
+
   console.log("tags", tags);
   const closeModal = () => {
     setIsOpen(false);
     setImage("");
     setTags([]);
+    setSuccess(false);
   };
   const openModal = () => {
     setIsOpen(true);
@@ -20,7 +30,7 @@ const UploadModal = () => {
 
   const handleImageChange = (event) => {
     if (event.target.files?.[0]) {
-      setFile(event.target.files[0]);
+      setFilename(event.target.files[0].name);
       const reader = new FileReader();
       reader.readAsDataURL(event.target.files[0]);
       reader.addEventListener(
@@ -28,7 +38,6 @@ const UploadModal = () => {
         async (e) => {
           setImage(e.target.result);
           const t = await getImageTags(reader.result);
-          //console.log("tags", t);
           const tagsArray = t.map((t) => t[0]);
           setTags(tagsArray);
         },
@@ -38,6 +47,16 @@ const UploadModal = () => {
       setImage("");
       setTags([]);
     }
+  };
+
+  const handleSubmit = () => {
+    const storage = firebase.storage();
+    const storageRef = storage.ref();
+    const userRef = storageRef.child(user.id);
+    const imageRef = userRef.child(filename);
+    imageRef.putString(image, "data_url").then((snapshot) => {
+      setSuccess(true);
+    });
   };
 
   return (
@@ -106,11 +125,18 @@ const UploadModal = () => {
                   <div>
                     <button
                       type="submit"
-                      className="bg-indigo-100 px-4 py-2 rounded-md text-sm font-medium text-indigo-900 hover:bg-indigo-200 focus-ring"
+                      className="bg-indigo-900 text-indigo-50 px-4 py-2 rounded-md text-sm font-medium hover:bg-indigo-800 focus-ring"
+                      onClick={handleSubmit}
                     >
                       Submit
                     </button>
+                    {success && (
+                      <span className={"ml-4 text-indigo-800"}>
+                        Success! Your image has been uploaded.
+                      </span>
+                    )}
                   </div>
+
                   <div className="self-end">
                     <button
                       type="button"
