@@ -53,9 +53,9 @@ export async function getServerSideProps(ctx) {
   const doc = await firebase.firestore().collection("users").doc(id).get();
   if (!doc.exists) {
     firebase.firestore().collection("users").doc(id).set({
-      id: user.id,
-      email: user.email,
-      name: user.name,
+      //id: user.id,
+      //email: user.email,
+      //name: user.name,
       closet: [],
     });
   }
