@@ -52,7 +52,7 @@ const Tags = () => {
       <input
         type="text"
         className={
-          "mt-1 w-full h-10 rounded-md border-gray-400 focus:ring-indigo-500 focus:border-indigo-500"
+          "form-input mt-1 w-full h-10 rounded-md border-gray-400 focus:ring-indigo-500 focus:border-indigo-500"
         }
         value={currTag}
         onKeyDown={handleKeyDown}
