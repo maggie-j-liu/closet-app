@@ -6,6 +6,7 @@ import { useTags } from "./TagsContext";
 import initFirebase from "../firebase/initFirebase";
 import firebase from "firebase/app";
 import { useUser } from "../firebase/useUser";
+import { useRouter } from "next/router";
 
 initFirebase();
 
@@ -16,6 +17,7 @@ const UploadModal = () => {
   const [success, setSuccess] = React.useState(false);
   const { tags, setTags } = useTags();
   const { user } = useUser();
+  const router = useRouter();
 
   console.log("tags", tags);
   const closeModal = () => {
@@ -23,6 +25,9 @@ const UploadModal = () => {
     setImage("");
     setTags([]);
     setSuccess(false);
+    router.replace(router.asPath, router.asPath, {
+      scroll: false,
+    });
   };
   const openModal = () => {
     setIsOpen(true);
@@ -62,11 +67,11 @@ const UploadModal = () => {
     const doc = await ref.get();
     if (doc.exists) {
       ref.update({
-        images: firebase.firestore.FieldValue.arrayUnion(url),
+        closet: firebase.firestore.FieldValue.arrayUnion(url),
       });
     } else {
       ref.set({
-        images: [url],
+        closet: [url],
       });
     }
     console.log("updated");
