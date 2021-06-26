@@ -75,6 +75,7 @@ const UploadModal = () => {
                       if (e.target.files?.[0]) {
                         setFile(e.target.files[0]);
                         setImage(URL.createObjectURL(e.target.files[0]));
+                        console.log(e.target.files[0]);
                       } else {
                         setImage("");
                       }
