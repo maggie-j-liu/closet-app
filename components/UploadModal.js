@@ -15,6 +15,7 @@ const UploadModal = () => {
   const [image, setImage] = React.useState();
   const [filename, setFilename] = React.useState("");
   const [success, setSuccess] = React.useState(false);
+  const [canSubmit, setCanSubmit] = React.useState(false);
   const { tags, setTags } = useTags();
   const { user } = useUser();
   const router = useRouter();
@@ -23,8 +24,10 @@ const UploadModal = () => {
   const closeModal = () => {
     setIsOpen(false);
     setImage("");
+    setFilename("");
     setTags([]);
     setSuccess(false);
+    setCanSubmit(false);
     router.replace(router.asPath, router.asPath, {
       scroll: false,
     });
@@ -45,16 +48,22 @@ const UploadModal = () => {
           const t = await getImageTags(reader.result);
           const tagsArray = t.map((t) => t[0]);
           setTags(tagsArray);
+          setCanSubmit(true);
         },
         false
       );
     } else {
       setImage("");
       setTags([]);
+      setCanSubmit(false);
+      setFilename("");
     }
   };
 
   const handleSubmit = async () => {
+    if (!canSubmit) {
+      return;
+    }
     const storage = firebase.storage();
     const storageRef = storage.ref();
     const userRef = storageRef.child(user.id);
@@ -65,24 +74,19 @@ const UploadModal = () => {
     const firestore = firebase.firestore();
     const ref = firestore.collection("users").doc(user.id);
     const doc = await ref.get();
-    if (doc.exists) {
-      ref.update({
-        closet: firebase.firestore.FieldValue.arrayUnion({
-          url: url,
-          tags: tags,
-        }),
-      });
-    } else {
-      ref.set({
-        closet: [
-          {
-            url: url,
-            tags: tags,
-          },
-        ],
-      });
-    }
+    const currentCloset = doc.data().closet;
+    currentCloset.push({
+      url: url,
+      tags: tags,
+    });
+    ref.update({
+      closet: currentCloset,
+    });
     console.log("updated");
+    setFilename("");
+    setImage("");
+    setTags([]);
+    setCanSubmit(false);
     setSuccess(true);
   };
 
@@ -92,7 +96,7 @@ const UploadModal = () => {
         <button
           type="button"
           onClick={openModal}
-          className="px-4 py-2 text-sm font-medium text-white bg-black rounded-md hover:bg-opacity-80 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75"
+          className="px-4 py-2 text-sm font-medium text-white bg-black rounded-md hover:bg-opacity-80 focus-ring"
         >
           Upload an Image
         </button>
@@ -152,8 +156,13 @@ const UploadModal = () => {
                   <div>
                     <button
                       type="submit"
-                      className="bg-indigo-900 text-indigo-50 px-4 py-2 rounded-md text-sm font-medium hover:bg-indigo-800 focus-ring"
+                      className={`${
+                        canSubmit
+                          ? "bg-indigo-900 hover:bg-indigo-800"
+                          : "bg-gray-400 cursor-not-allowed"
+                      } text-indigo-50 px-4 py-2 rounded-md text-sm font-medium focus-ring`}
                       onClick={handleSubmit}
+                      disabled={!canSubmit}
                     >
                       Submit
                     </button>

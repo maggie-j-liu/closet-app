@@ -28,10 +28,13 @@ const Tags = () => {
       <div className={"flex gap-2 flex-wrap mt-1.5"}>
         {tags.map((tag, idx) => {
           return (
-            <div className={"px-2 py-0.5 bg-indigo-100 rounded-sm"} key={idx}>
+            <div
+              className={"px-2 py-0.5 bg-indigo-100 rounded-sm text-indigo-900"}
+              key={idx}
+            >
               <span>{tag}</span>
               <button
-                className={"inline ml-1"}
+                className={"inline ml-1 focus-ring-small"}
                 type="button"
                 onClick={() => removeTag(idx)}
               >

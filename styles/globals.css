@@ -3,6 +3,9 @@
 @tailwind utilities;
 
 @layer utilities {
+  .focus-ring-small {
+    @apply focus:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500;
+  }
   .focus-ring {
     @apply focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-indigo-500;
   }

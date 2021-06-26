@@ -11,25 +11,31 @@ const Navbar = () => {
     >
       <div className={"flex gap-10"}>
         <Link href={"/"}>
-          <a className={"font-bold text-indigo-900"}>Clear Closet</a>
+          <a className={"font-bold text-indigo-900 focus-ring rounded-sm"}>
+            Clear Closet
+          </a>
         </Link>
-        
-        {user && (<Link href={{
-          pathname: '/closet/[userId]',
-          query: {
-            userId: user.id
-          }
-        }}>
 
-          <a>My Closet</a>
-        </Link>
+        {user && (
+          <Link
+            href={{
+              pathname: "/closet/[userId]",
+              query: {
+                userId: user.id,
+              },
+            }}
+          >
+            <a className={"focus-ring rounded-sm"}>My Closet</a>
+          </Link>
         )}
-        {!user && (<Link href={{
-          pathname: '/closet',
-        }}>
-
-          <a>My Closet</a>
-        </Link>
+        {!user && (
+          <Link
+            href={{
+              pathname: "/closet",
+            }}
+          >
+            <a className={"focus-ring rounded-sm"}>My Closet</a>
+          </Link>
         )}
       </div>
       {!user && (
@@ -40,12 +46,12 @@ const Navbar = () => {
         </div>
       )}
       {user && (
-        <div>
-          {user.name}{" "}
+        <div className={"gap-10 flex"}>
+          {user.name}
           <button
             alt="Logout"
             onClick={() => logout()}
-            style={{ width: "100px" }}
+            className={"focus-ring rounded-sm"}
           >
             Log Out
           </button>

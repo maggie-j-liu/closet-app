@@ -1,11 +1,14 @@
 const Image = ({ url, tags }) => {
   console.log("image tags", tags);
   return (
-    <div className={"relative w-full h-full group flex justify-center"}>
+    <div
+      className={"relative w-full h-full group flex justify-center focus-ring"}
+      tabIndex={0}
+    >
       <img src={url} className={"self-center"} />
       <div
         className={
-          "absolute inset-0 bg-gray-700 opacity-0 group-hover:opacity-60"
+          "absolute inset-0 bg-gray-700 opacity-0 group-hover:opacity-60 group-focus:opacity-60"
         }
       />
       <div
@@ -20,7 +23,7 @@ const Image = ({ url, tags }) => {
             <div
               key={idx}
               className={
-                "opacity-0 group-hover:opacity-100 h-max bg-indigo-300/70 px-1 py-0.5 rounded-md"
+                "opacity-0 group-hover:opacity-100 group-focus:opacity-100 h-max bg-indigo-300/90 px-1 py-0.5 rounded-md"
               }
             >
               {tag}
@@ -33,8 +36,9 @@ const Image = ({ url, tags }) => {
 };
 
 const ImageGrid = ({ images }) => {
-  console.log(images);
-  images = images.reverse();
+  console.log("images", images);
+  images.reverse();
+  console.log("reversed", images);
   return (
     <div
       className={
