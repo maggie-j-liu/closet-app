@@ -10,6 +10,5 @@ export default function Home() {
         </h1>
         <p className="text-gray-500">Upload, save, and search images.</p>
       </div>
-    </>
   );
 }

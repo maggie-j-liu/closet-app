@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { useUser } from "../firebase/useUser";
 const Navbar = () => {
-  const { user } = useUser();
+  const { user, logout } = useUser()
   return (
     <nav
       className={
@@ -23,7 +23,7 @@ const Navbar = () => {
           </Link>
         </div>
       )}
-      {user && <div>{user.name}</div>}
+      {user && <div>{user.name} <button alt = "Logout" onClick={() => logout()} style={{ width: '100px' }}>Log Out</button></div>}
     </nav>
   );
 };
