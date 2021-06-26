@@ -42,18 +42,17 @@ const Closet = ({ userId, userCloset }) => {
         userCloset[i + 1] = x;
       }
     }
-  firebase
-    .firestore()
-    .collection("users")
-    .doc(user.id)
-    .update({ id: user.id, name: user.name, email: user.email });
   const displayCloset = [];
   for (var i = 0; i < userCloset.length; i ++) {
     if (siml(userCloset[i].tags, tags) >= tags.length/2) {
       displayCloset.push(userCloset[i]);
     }
   }
-
+  firebase
+    .firestore()
+    .collection("users")
+    .doc(user.id)
+    .update({ id: user.id, name: user.name, email: user.email });
   firebase.firestore().collection("users").doc(user.id).update({id: user.id, name: user.name, email: user.email})
   // no support for sharing closets yet
   if (userId != user.id) {
@@ -70,9 +69,6 @@ const Closet = ({ userId, userCloset }) => {
   // })
   return (
     <div>
-      <div>
-        <Tags tags={tags} setTags={setTags} />
-      </div>
       <div
         className={
           "bg-indigo-50 w-full h-72 flex items-center justify-between px-20"
@@ -82,6 +78,9 @@ const Closet = ({ userId, userCloset }) => {
         <div>Icon of closet here</div>
       </div>
 
+      <div className={"w-3/4 mx-auto"}>
+        <Tags text={"Search by tags"} tags={tags} setTags={setTags} />
+      </div>
       <UploadModal />
       <ImageGrid images={displayCloset} />
     </div>

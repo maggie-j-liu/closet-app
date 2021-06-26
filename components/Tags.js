@@ -1,7 +1,7 @@
 import React from "react";
 import { useTags } from "./TagsContext";
 
-const Tags = ({ tags, setTags }) => {
+const Tags = ({ tags, setTags, text }) => {
   console.log("tags", tags);
   const [currTag, setCurrTag] = React.useState("");
   const handleChange = (e) => {
@@ -23,7 +23,7 @@ const Tags = ({ tags, setTags }) => {
   };
   return (
     <div>
-      <div className={"text-gray-900 font-medium"}>Tags</div>
+      <div className={"text-gray-900 font-medium"}>{text ?? "Tags"}</div>
       <div className={"flex gap-2 flex-wrap mt-1.5"}>
         {tags.map((tag, idx) => {
           return (
