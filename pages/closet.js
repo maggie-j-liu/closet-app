@@ -50,7 +50,7 @@ const Closet = ({ userCloset }) => {
   //     <ImageGrid images={[]} />
   //   </div>
   // );
-}
+};
 // export async function getServerSideProps () {
 //   const { user } = useUser();
 //   // const user = {id: 1, email: "fdsa", name: "john"}
@@ -62,4 +62,4 @@ const Closet = ({ userCloset }) => {
 //     },
 //   }
 // }
-export default Closet
+export default Closet;
