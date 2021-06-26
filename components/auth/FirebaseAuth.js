@@ -5,6 +5,8 @@ import firebase from 'firebase/app'
 import 'firebase/auth'
 import { setUserCookie } from '../../firebase/userCookies'
 import { mapUserData } from '../../firebase/mapUserData'
+import 'firebase/firestore'
+import { useUser } from '../../firebase/useUser'
 
 initFirebase() // initialize firebase
 
@@ -14,23 +16,22 @@ const firebaseAuthConfig = {
     // https://github.com/firebase/firebaseui-web#configure-oauth-providers
     signInOptions: [
         {
-            provider: firebase.auth.EmailAuthProvider.PROVIDER_ID,
-            requireDisplayName: true,
+            provider: firebase.auth.EmailAuthProvider.PROVIDER_ID
         },
         // add additional auth flows below
         firebase.auth.GoogleAuthProvider.PROVIDER_ID,
         // firebase.auth.TwitterAuthProvider.PROVIDER_ID,
         // firebase.auth.GithubAuthProvider.PROVIDER_ID,
     ],
-    signInSuccessUrl: '/',
+    signInSuccessUrl: '/closet',
     credentialHelper: 'none',
     callbacks: {
         signInSuccessWithAuthResult: async ({ user }, redirectUrl) => {
-            window.location.assign('/closet');
             const userData = mapUserData(user)
             setUserCookie(userData)
-        },
-    },
+            WriteToCloudFirestore()
+        }
+    }
 }
 
 const FirebaseAuth = () => {
