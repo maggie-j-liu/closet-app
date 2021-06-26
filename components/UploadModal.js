@@ -1,17 +1,45 @@
 import { Dialog, Transition } from "@headlessui/react";
 import React, { Fragment } from "react";
 import Tags from "./Tags";
+import getImageTags from "../utils/getImageTags";
+import { useTags } from "./TagsContext";
 const UploadModal = () => {
   const [isOpen, setIsOpen] = React.useState(false);
   const [file, setFile] = React.useState();
   const [image, setImage] = React.useState();
+  const { tags, setTags } = useTags();
+  console.log("tags", tags);
   const closeModal = () => {
     setIsOpen(false);
     setImage("");
+    setTags([]);
   };
   const openModal = () => {
     setIsOpen(true);
   };
+
+  const handleImageChange = (event) => {
+    if (event.target.files?.[0]) {
+      setFile(event.target.files[0]);
+      const reader = new FileReader();
+      reader.readAsDataURL(event.target.files[0]);
+      reader.addEventListener(
+        "load",
+        async (e) => {
+          setImage(e.target.result);
+          const t = await getImageTags(reader.result);
+          //console.log("tags", t);
+          const tagsArray = t.map((t) => t[0]);
+          setTags(tagsArray);
+        },
+        false
+      );
+    } else {
+      setImage("");
+      setTags([]);
+    }
+  };
+
   return (
     <>
       <div className="my-8 inset-0 flex items-center justify-center">
@@ -71,15 +99,7 @@ const UploadModal = () => {
                     type="file"
                     accept="image/jpeg, image/png"
                     className={"p-0.5 rounded-md focus-ring w-min"}
-                    onChange={(e) => {
-                      if (e.target.files?.[0]) {
-                        setFile(e.target.files[0]);
-                        setImage(URL.createObjectURL(e.target.files[0]));
-                        console.log(e.target.files[0]);
-                      } else {
-                        setImage("");
-                      }
-                    }}
+                    onChange={handleImageChange}
                   />
                   <img src={image} className={"w-3/4 m-auto"} />
                   <Tags />

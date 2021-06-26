@@ -1,4 +1,5 @@
 import React, { Fragment } from "react";
+import getImageTags from "../utils/getImageTags";
 
 export default function ClothingTest() {
   /* generated tags */
@@ -11,26 +12,8 @@ export default function ClothingTest() {
     reader.readAsDataURL(event.target.files[0]);
     reader.addEventListener(
       "load",
-      function () {
-        let url = reader.result;
-        url = url.replace("data:image/jpeg;base64,", "");
-        /* ^ extract prefix to get base64 */
-
-        /* fetch the data */
-        fetch(`https://clothing-api-server.vercel.app/fetch`, {
-          method: "POST",
-          headers: {
-            "content-type": "application/json",
-          },
-          body: JSON.stringify({
-            base64: url,
-          }),
-        }).then((data) => {
-          data.json().then((newTags) => {
-            console.log(newTags);
-            setTags(newTags);
-          });
-        });
+      async function () {
+        setTags(await getImageTags(reader.result));
       },
       false
     );

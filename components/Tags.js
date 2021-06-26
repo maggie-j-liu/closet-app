@@ -1,7 +1,9 @@
 import React from "react";
+import { useTags } from "./TagsContext";
 
 const Tags = () => {
-  const [tags, setTags] = React.useState([]);
+  const { tags, setTags } = useTags();
+  console.log("tags", tags);
   const [currTag, setCurrTag] = React.useState("");
   const handleChange = (e) => {
     setCurrTag(e.target.value);
@@ -12,6 +14,7 @@ const Tags = () => {
       console.log(tags);
       e.preventDefault();
       tags.push(currTag);
+      setTags([...tags]);
       setCurrTag("");
     }
   };
