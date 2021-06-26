@@ -67,11 +67,19 @@ const UploadModal = () => {
     const doc = await ref.get();
     if (doc.exists) {
       ref.update({
-        closet: firebase.firestore.FieldValue.arrayUnion(url),
+        closet: firebase.firestore.FieldValue.arrayUnion({
+          url: url,
+          tags: tags,
+        }),
       });
     } else {
       ref.set({
-        closet: [url],
+        closet: [
+          {
+            url: url,
+            tags: tags,
+          },
+        ],
       });
     }
     console.log("updated");

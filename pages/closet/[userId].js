@@ -61,7 +61,7 @@ export async function getServerSideProps(ctx) {
   }
 
   const userDoc = await firebase.firestore().collection("users").doc(id).get();
-  const userCloset = userDoc.data().closet ?? null;
+  const userCloset = userDoc.data().closet ?? [];
   return {
     props: {
       userId: id,
