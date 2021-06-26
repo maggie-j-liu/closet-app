@@ -42,11 +42,23 @@ const Closet = ({ userId, userCloset }) => {
         userCloset[i + 1] = x;
       }
     }
+<<<<<<< Updated upstream
   firebase
     .firestore()
     .collection("users")
     .doc(user.id)
     .update({ id: user.id, name: user.name, email: user.email });
+=======
+  }
+  const displayCloset = [];
+  for (var i = 0; i < userCloset.length-1; i ++) {
+    if (siml(userCloset[i].tags, tags) >= tags.length/2) {
+      displayCloset.push(userCloset[i]);
+    }
+  }
+
+  firebase.firestore().collection("users").doc(user.id).update({id: user.id, name: user.name, email: user.email})
+>>>>>>> Stashed changes
   // no support for sharing closets yet
   if (userId != user.id) {
     router.replace({
@@ -75,7 +87,7 @@ const Closet = ({ userId, userCloset }) => {
         <Tags text={"Search by tags"} tags={tags} setTags={setTags} />
       </div>
       <UploadModal />
-      <ImageGrid images={userCloset} />
+      <ImageGrid images={displayCloset} />
     </div>
   );
 };
