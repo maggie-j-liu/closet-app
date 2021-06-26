@@ -38,14 +38,14 @@ const Closet = ({ userId }) => {
 
 export async function getServerSideProps(ctx) {
     const id = ctx.params.userId;
-    // const doc = await firebase
-    //     .firestore()
-    //     .collection('users')
-    //     .doc(ctx.params.userId).get()
-    //     if (!doc.exists) {
-    //         firebase.firestore().collection('users').doc(ctx.params.userId).update({id: user.id, email: user.email, name: user.name});
-    //         firebase.firestore().collection('users').doc(ctx.params.userId).update({closet: []});
-    //     }
+    const doc = await firebase
+        .firestore()
+        .collection('users')
+        .doc(ctx.params.userId).get()
+        if (!doc.exists) {
+            firebase.firestore().collection('users').doc(id).update({id: user.id, email: user.email, name: user.name});
+            firebase.firestore().collection('users').doc(id).update({closet: []});
+        }
 
     // var userCloset = null;
     // firebase.firestore().collection('users').doc(user.id).onSnapshot(function (doc) { userCloset = doc.data().closet; console.log(userCloset) });
