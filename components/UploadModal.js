@@ -49,14 +49,28 @@ const UploadModal = () => {
     }
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     const storage = firebase.storage();
     const storageRef = storage.ref();
     const userRef = storageRef.child(user.id);
     const imageRef = userRef.child(filename);
-    imageRef.putString(image, "data_url").then((snapshot) => {
-      setSuccess(true);
-    });
+    const snapshot = await imageRef.putString(image, "data_url");
+    const url = await snapshot.ref.getDownloadURL();
+    console.log(url);
+    const firestore = firebase.firestore();
+    const ref = firestore.collection("users").doc(user.id);
+    const doc = await ref.get();
+    if (doc.exists) {
+      ref.update({
+        images: firebase.firestore.FieldValue.arrayUnion(url),
+      });
+    } else {
+      ref.set({
+        images: [url],
+      });
+    }
+    console.log("updated");
+    setSuccess(true);
   };
 
   return (
