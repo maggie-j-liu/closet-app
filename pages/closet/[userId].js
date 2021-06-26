@@ -7,6 +7,7 @@ import Loading from "../../components/Loading";
 import firebase from "firebase/app";
 import "firebase/firestore";
 import { useRouter } from "next/router";
+import TagSearch from "../../components/TagSearch"
 // var user_id = null;
 const Closet = ({ userId, userCloset }) => {
   const { user } = useUser();
@@ -35,6 +36,7 @@ const Closet = ({ userId, userCloset }) => {
   // })
   return (
     <div>
+      <TagSearch />
       <div
         className={
           "bg-indigo-50 w-full h-72 flex items-center justify-between px-20"
@@ -43,6 +45,7 @@ const Closet = ({ userId, userCloset }) => {
         <h1 className={"text-5xl font-bold"}>My Closet</h1>
         <div>Icon of closet here</div>
       </div>
+      
       <UploadModal />
       <ImageGrid images={userCloset} />
     </div>

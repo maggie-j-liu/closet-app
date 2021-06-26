@@ -170,6 +170,7 @@ const UploadModal = () => {
                       <span className={"ml-4 text-indigo-800"}>
                         Success! Your image has been uploaded.
                       </span>
+                      
                     )}
                   </div>
 
