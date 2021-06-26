@@ -1,8 +1,19 @@
 import React from "react";
 import UploadModal from "../components/UploadModal";
 import ImageGrid from "../components/ImageGrid";
+import { useUser } from "../firebase/useUser";
+import NotLoggedInMessage from "../components/NotLoggedInMessage";
+import Loading from "../components/Loading";
 
 const Closet = () => {
+  const { user } = useUser();
+  if (user === null) {
+    return <Loading />;
+  } else if (user === undefined) {
+    return (
+      <NotLoggedInMessage>Log in to access your closet</NotLoggedInMessage>
+    );
+  }
   return (
     <div>
       <div

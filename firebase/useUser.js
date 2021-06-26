@@ -1,62 +1,78 @@
-import { useEffect, useState } from 'react'
-import { useRouter } from 'next/router'
-import firebase from 'firebase/app'
-import 'firebase/auth'
-import initFirebase from '../firebase/initFirebase'
+import { useEffect, useState, createContext, useContext } from "react";
+import { useRouter } from "next/router";
+import firebase from "firebase/app";
+import "firebase/auth";
+import initFirebase from "../firebase/initFirebase";
 import {
-    removeUserCookie,
-    setUserCookie,
-    getUserFromCookie,
-} from './userCookies'
-import { mapUserData } from './mapUserData'
+  removeUserCookie,
+  setUserCookie,
+  getUserFromCookie,
+} from "./userCookies";
+import { mapUserData } from "./mapUserData";
 
-initFirebase()
+initFirebase();
 
-const useUser = () => {
-    const [user, setUser] = useState()
-    const router = useRouter()
+const useAuth = () => {
+  const [user, setUser] = useState(null);
+  const router = useRouter();
 
-    const logout = async () => {
-        return firebase
-            .auth()
-            .signOut()
-            .then(() => {
-                // Sign-out successful.
-                router.push('/auth')
-            })
-            .catch((e) => {
-                console.error(e)
-            })
+  const logout = async () => {
+    return firebase
+      .auth()
+      .signOut()
+      .then(() => {
+        // Sign-out successful.
+        router.push("/auth");
+      })
+      .catch((e) => {
+        console.error(e);
+      });
+  };
+
+  useEffect(() => {
+    // Firebase updates the id token every hour, this
+    // makes sure the react state and the cookie are
+    // both kept up to date
+    const cancelAuthListener = firebase.auth().onIdTokenChanged((user) => {
+      if (user) {
+        const userData = mapUserData(user);
+        setUserCookie(userData);
+        setUser(userData);
+      } else {
+        removeUserCookie();
+        setUser();
+      }
+    });
+
+    const userFromCookie = getUserFromCookie();
+    /*
+    if (!userFromCookie) {
+      router.push("/");
+      return;
     }
+    */
+    setUser(userFromCookie);
 
-    useEffect(() => {
-        // Firebase updates the id token every hour, this
-        // makes sure the react state and the cookie are
-        // both kept up to date
-        const cancelAuthListener = firebase.auth().onIdTokenChanged((user) => {
-            if (user) {
-                const userData = mapUserData(user)
-                setUserCookie(userData)
-                setUser(userData)
-            } else {
-                removeUserCookie()
-                setUser()
-            }
-        })
+    return () => {
+      cancelAuthListener();
+    };
+  }, []);
 
-        const userFromCookie = getUserFromCookie()
-        if (!userFromCookie) {
-            router.push('/')
-            return
-        }
-        setUser(userFromCookie)
+  return { user, logout };
+};
 
-        return () => {
-            cancelAuthListener()
-        }
-    }, [])
+const AuthUserContext = createContext({
+  user: null,
+  logout: () => {},
+});
 
-    return { user, logout }
-}
+const AuthUserProvider = ({ children }) => {
+  const auth = useAuth();
+  return (
+    <AuthUserContext.Provider value={auth}>{children}</AuthUserContext.Provider>
+  );
+};
 
-export { useUser }
+export const useUser = () => useContext(AuthUserContext);
+
+export default AuthUserProvider;

@@ -1,7 +1,8 @@
 import Link from "next/link";
 import { useUser } from "../firebase/useUser";
 const Navbar = () => {
-  const { user, logout } = useUser()
+  const { user, logout } = useUser();
+  console.log(user);
   return (
     <nav
       className={
@@ -23,7 +24,18 @@ const Navbar = () => {
           </Link>
         </div>
       )}
-      {user && <div>{user.name} <button alt = "Logout" onClick={() => logout()} style={{ width: '100px' }}>Log Out</button></div>}
+      {user && (
+        <div>
+          {user.name}{" "}
+          <button
+            alt="Logout"
+            onClick={() => logout()}
+            style={{ width: "100px" }}
+          >
+            Log Out
+          </button>
+        </div>
+      )}
     </nav>
   );
 };
