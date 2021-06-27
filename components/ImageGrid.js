@@ -33,7 +33,7 @@ const Image = ({ url, tags, deleteItem }) => {
             <div
               key={idx}
               className={
-                "opacity-0 group-hover:opacity-100 group-focus:opacity-100 h-max bg-indigo-300/90 px-1 py-0.5 rounded-md"
+                "opacity-0 group-hover:opacity-100 group-focus:opacity-100 h-max text-gray-800 bg-indigo-300/90 px-1 py-0.5 rounded-md"
               }
             >
               {tag}

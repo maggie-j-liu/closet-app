@@ -23,6 +23,7 @@ function siml(a, b) {
 const Closet = ({ userId, userCloset }) => {
   const { user } = useUser();
   const router = useRouter();
+  const [tags, setTags] = React.useState([]);
   if (user === null) {
     return <Loading />;
   }
@@ -31,11 +32,10 @@ const Closet = ({ userId, userCloset }) => {
       <NotLoggedInMessage>Log in to access your closet</NotLoggedInMessage>
     );
   }
-  const [tags, setTags] = React.useState([]);
   // setTags([]);
   console.log(userCloset);
   for (var j = 0; j < userCloset.length; j++)
-    for (var i = 0; i < userCloset.length-1; i++) {
+    for (var i = 0; i < userCloset.length - 1; i++) {
       if (siml(userCloset[i].tags, tags) > siml(userCloset[i + 1].tags, tags)) {
         const x = userCloset[i];
         userCloset[i] = userCloset[i + 1];
@@ -43,8 +43,8 @@ const Closet = ({ userId, userCloset }) => {
       }
     }
   const displayCloset = [];
-  for (var i = 0; i < userCloset.length; i ++) {
-    if (siml(userCloset[i].tags, tags) >= tags.length/2) {
+  for (var i = 0; i < userCloset.length; i++) {
+    if (siml(userCloset[i].tags, tags) >= tags.length / 2) {
       displayCloset.push(userCloset[i]);
     }
   }
@@ -53,7 +53,11 @@ const Closet = ({ userId, userCloset }) => {
     .collection("users")
     .doc(user.id)
     .update({ id: user.id, name: user.name, email: user.email });
-  firebase.firestore().collection("users").doc(user.id).update({id: user.id, name: user.name, email: user.email})
+  firebase
+    .firestore()
+    .collection("users")
+    .doc(user.id)
+    .update({ id: user.id, name: user.name, email: user.email });
   // no support for sharing closets yet
   if (userId != user.id) {
     router.replace({
@@ -78,7 +82,7 @@ const Closet = ({ userId, userCloset }) => {
         <div>Icon of closet here</div>
       </div>
 
-      <div className={"w-3/4 mx-auto"}>
+      <div className={"w-3/4 mx-auto mt-4"}>
         <Tags text={"Search by tags"} tags={tags} setTags={setTags} />
       </div>
       <UploadModal />
