@@ -95,7 +95,7 @@ const UploadModal = () => {
 
   return (
     <>
-      <div className="my-8 inset-0 flex items-center justify-center">
+      <div className="z-40 my-8 inset-0 flex items-center justify-center">
         <button
           type="button"
           onClick={openModal}
@@ -108,10 +108,10 @@ const UploadModal = () => {
       <Transition appear show={isOpen} as={Fragment}>
         <Dialog
           as="div"
-          className="fixed inset-0 z-10 overflow-y-auto"
+          className="fixed inset-0 z-40 overflow-y-auto"
           onClose={closeModal}
         >
-          <div className="min-h-screen px-4 text-center">
+          <div className="min-h-screen px-4 text-center z-40">
             <Transition.Child
               as={Fragment}
               enter="ease-out duration-300"

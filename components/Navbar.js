@@ -8,7 +8,7 @@ const Navbar = () => {
   return (
     <nav
       className={
-        "z-50 shadow sticky min-w-full py-4 px-10 flex items-center justify-between font-medium"
+        "z-30 shadow sticky min-w-full py-4 px-10 flex items-center justify-between font-medium"
       }
     >
       <div className={"flex gap-2 items-center"}>
