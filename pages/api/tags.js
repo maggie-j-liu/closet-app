@@ -42,3 +42,11 @@ export default async (req, res) => {
   });
   res.json(await f);
 };
+
+export const config = {
+  api: {
+    bodyParser: {
+      sizeLimit: "50mb",
+    },
+  },
+};
