@@ -16,6 +16,7 @@ const UploadModal = () => {
   const [filename, setFilename] = React.useState("");
   const [success, setSuccess] = React.useState(false);
   const [canSubmit, setCanSubmit] = React.useState(false);
+  const [tagsLoading, setTagsLoading] = React.useState(false);
   const { tags, setTags } = useTags();
   const { user } = useUser();
   const router = useRouter();
@@ -41,6 +42,7 @@ const UploadModal = () => {
     setSuccess(false);
     if (event.target.files?.[0]) {
       setFilename(event.target.files[0].name);
+      setTagsLoading(true);
       const reader = new FileReader();
       reader.readAsDataURL(event.target.files[0]);
       reader.addEventListener(
@@ -50,6 +52,7 @@ const UploadModal = () => {
           const t = await getImageTags(reader.result);
           const tagsArray = t.map((t) => t[0]);
           setTags(tagsArray);
+          setTagsLoading(false);
           setCanSubmit(true);
         },
         false
@@ -156,7 +159,7 @@ const UploadModal = () => {
                     onChange={handleImageChange}
                   />
                   <img src={image} className={"w-3/4 m-auto"} />
-                  <Tags tags={tags} setTags={setTags} />
+                  <Tags tags={tags} setTags={setTags} loading={tagsLoading} />
                   <div>
                     <button
                       type="submit"

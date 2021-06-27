@@ -6,7 +6,6 @@ metadata.set("authorization", "Key " + CLARIFAI_API_KEY);
 
 export default async (req, res) => {
   const data = req.body.base64;
-  console.log(data);
   let f = new Promise((resolve, reject) => {
     stub.PostModelOutputs(
       {

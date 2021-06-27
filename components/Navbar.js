@@ -13,7 +13,7 @@ const Navbar = () => {
     >
       <div className={"flex gap-2 items-center"}>
         <Link href={"/"}>
-          <a>
+          <a className={"focus-ring rounded-sm"}>
             <Image
               height="40px"
               width="20px"
@@ -23,11 +23,15 @@ const Navbar = () => {
           </a>
         </Link>
         <Link href={"/"}>
-          <a className={"font-bold hover:text-indigo-600 hover:underline"}>
+          <a
+            className={
+              "font-bold hover:text-indigo-600 hover:underline focus-ring rounded-sm"
+            }
+          >
             Clear Closet
           </a>
         </Link>
-      </div> 
+      </div>
       <div>
         {user && (
           <Link
@@ -38,7 +42,13 @@ const Navbar = () => {
               },
             }}
           >
-            <a className={"hover:underline focus-ring rounded-sm hover:text-indigo-600"}>My Closet</a>
+            <a
+              className={
+                "hover:underline focus-ring rounded-sm hover:text-indigo-600"
+              }
+            >
+              My Closet
+            </a>
           </Link>
         )}
         {!user && (
@@ -47,7 +57,13 @@ const Navbar = () => {
               pathname: "/closet",
             }}
           >
-            <a className={"hover:underline focus-ring rounded-sm hover:text-indigo-600"}>My Closet</a>
+            <a
+              className={
+                "hover:underline focus-ring rounded-sm hover:text-indigo-600"
+              }
+            >
+              My Closet
+            </a>
           </Link>
         )}
       </div>
@@ -61,7 +77,10 @@ const Navbar = () => {
       {user && (
         <div className={"gap-10 flex"}>
           {user.name}
-          <button className = {"hover:underline hover:text-indigo-600"}
+          <button
+            className={
+              "hover:underline hover:text-indigo-600 focus-ring rounded-sm"
+            }
             alt="Logout"
             onClick={() => logout()}
           >

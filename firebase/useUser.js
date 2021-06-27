@@ -22,7 +22,7 @@ const useAuth = () => {
       .signOut()
       .then(() => {
         // Sign-out successful.
-        router.push("/auth");
+        router.push("/");
       })
       .catch((e) => {
         console.error(e);
