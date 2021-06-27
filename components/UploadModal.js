@@ -77,7 +77,10 @@ const UploadModal = () => {
     const ref = firestore.collection("users").doc(user.id);
     const doc = await ref.get();
     let currentCloset = doc.data().closet;
-    currentCloset = [{ url: url, tags: tags }, ...currentCloset];
+    currentCloset = [
+      { url: url, tags: tags, storagePath: imageRef.fullPath },
+      ...currentCloset,
+    ];
     ref.update({
       closet: currentCloset,
     });
