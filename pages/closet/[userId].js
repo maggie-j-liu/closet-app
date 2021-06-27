@@ -77,7 +77,7 @@ const Closet = ({ userId, userCloset }) => {
     <div>
       <div
         className={
-          "bg-indigo-200 gap-10 flex w-full h-60 items-center justify-start px-20"
+          "bg-indigo-200 gap-10 flex w-full h-60 items-center justify-center px-20"
         }
       >
         <div className={"text-5xl font-bold items-center"}>My Closet</div>
