@@ -1,7 +1,25 @@
 import FirebaseAuth from "../components/auth/FirebaseAuth";
 import Link from "next/link";
+import { useRouter } from "next/router";
+import Loading from "../components/Loading";
+import { useUser } from "../firebase/useUser";
 const Auth = () => {
+  const { user } = useUser();
+  const router = useRouter();
+  if (user === null) {
+    return <Loading />;
+  }
+  if (user !== undefined) {
+    router.replace({
+      pathname: '/closet/[userId]', 
+      query: {
+        userId: user.id
+      }
+    });
+    return null;
+  }
   return (
+    
     <div>
       <div
         className={
