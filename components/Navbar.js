@@ -1,5 +1,5 @@
 import Link from "next/link";
-import Image from "next/Image"
+import Image from "next/image"
 import { useUser } from "../firebase/useUser";
 import Logo from "../public/clearcloset.png"
 const Navbar = () => {
@@ -8,20 +8,20 @@ const Navbar = () => {
   return (
     <nav
       className={
-        "z-10 shadow sticky min-w-full py-4 px-10 flex items-center justify-between font-medium"
+        "z-50 shadow sticky min-w-full py-4 px-10 flex items-center justify-between font-medium"
       }
     >
-      <div className={"flex gap-10 items-center"}>
+      <div className={"flex gap-2 items-center"}>
         <Link href={"/"}>
         <a><Image height = "40px" width = "20px" src={Logo} alt = "Clear Closet Logo"/></a>
         </Link>
         <Link href={"/"}>
-          <div className={"font-bold "}>
+          <a className={"font-bold"}>
             Clear Closet
-          </div>
+          </a>
         </Link>
-        
-
+      </div> 
+      <div>
         {user && (
           <Link
             href={{
@@ -57,7 +57,6 @@ const Navbar = () => {
           <button
             alt="Logout"
             onClick={() => logout()}
-            className={"focus-ring rounded-sm"}
           >
             Log Out
           </button>
