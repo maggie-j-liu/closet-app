@@ -99,7 +99,7 @@ const UploadModal = () => {
         <button
           type="button"
           onClick={openModal}
-          className="px-4 py-2 text-sm font-medium text-white bg-black rounded-md hover:bg-opacity-80 focus-ring"
+          className="px-4 py-2 text-sm font-medium text-white bg-black rounded-md hover:bg-indigo-800 focus-ring"
         >
           Upload an Image
         </button>
