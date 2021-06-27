@@ -3,7 +3,7 @@ const getImageTags = async (url) => {
   /* ^ extract prefix to get base64 */
 
   /* fetch the data */
-  const response = await fetch(`https://clothing-api-server.vercel.app/fetch`, {
+  const response = await fetch(`/api/tags`, {
     method: "POST",
     headers: {
       "content-type": "application/json",
