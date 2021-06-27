@@ -11,7 +11,7 @@ import { useRouter } from "next/router";
 import Tags from "../../components/Tags";
 import { useTags } from "../../components/TagsContext";
 import TagSearch from "../../components/TagSearch";
-import Logo from "../../public/clearcloset.png"
+import Logo from "../../public/clearcloset.png";
 // var user_id = null;
 function siml(a, b) {
   var res = 0;
@@ -77,12 +77,12 @@ const Closet = ({ userId, userCloset }) => {
     <div>
       <div
         className={
-          "bg-indigo-200 gap-10 flex w-full h-60 items-center justify-center px-20"
+          "bg-gradient-to-r from-indigo-100 via-indigo-200 to-blue-100 gap-10 flex w-full h-60 items-center justify-center px-20"
         }
       >
         <div className={"text-5xl font-bold items-center"}>My Closet</div>
-        <Image src = {Logo} width = "60px" height = "120px" alt = "Clear Closet Logo"/>
-        </div>
+        <Image src={Logo} width="60px" height="120px" alt="Clear Closet Logo" />
+      </div>
 
       <div className={"py-5 w-3/4 mx-auto"}>
         <Tags text={"Search by tags"} tags={tags} setTags={setTags} />
