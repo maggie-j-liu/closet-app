@@ -13,7 +13,7 @@ const Auth = () => {
         </div>
         <p className={""}>
           <Link href={"/"}>
-            <a className={"font-medium hover:text-indigo-900 hover:underline"}>
+            <a className={"font-medium hover:text-indigo-900 hover:underline hover:text-indigo-600"}>
               &larr; Go Home
             </a>
           </Link>

@@ -8,7 +8,7 @@ const Navbar = () => {
   return (
     <nav
       className={
-        "z-50 shadow sticky min-w-full py-4 px-10 flex items-center justify-between font-medium"
+        "z-30 shadow sticky min-w-full py-4 px-10 flex items-center justify-between font-medium"
       }
     >
       <div className={"flex gap-2 items-center"}>
@@ -23,7 +23,7 @@ const Navbar = () => {
           </a>
         </Link>
         <Link href={"/"}>
-          <a className={"font-bold hover:text-indigo-600"}>
+          <a className={"font-bold hover:text-indigo-600 hover:underline"}>
             Clear Closet
           </a>
         </Link>
@@ -38,7 +38,7 @@ const Navbar = () => {
               },
             }}
           >
-            <a className={"focus-ring rounded-sm hover:text-indigo-600"}>My Closet</a>
+            <a className={"hover:underline focus-ring rounded-sm hover:text-indigo-600"}>My Closet</a>
           </Link>
         )}
         {!user && (
@@ -47,12 +47,12 @@ const Navbar = () => {
               pathname: "/closet",
             }}
           >
-            <a className={"focus-ring rounded-sm hover:text-indigo-600"}>My Closet</a>
+            <a className={"hover:underline focus-ring rounded-sm hover:text-indigo-600"}>My Closet</a>
           </Link>
         )}
       </div>
       {!user && (
-        <div className={"hover:text-indigo-600"}>
+        <div className={"hover:underline hover:text-indigo-600"}>
           <Link href={"/auth"}>
             <a>Log In</a>
           </Link>
@@ -61,7 +61,7 @@ const Navbar = () => {
       {user && (
         <div className={"gap-10 flex"}>
           {user.name}
-          <button className = {"hover:text-indigo-600"}
+          <button className = {"hover:underline hover:text-indigo-600"}
             alt="Logout"
             onClick={() => logout()}
           >
