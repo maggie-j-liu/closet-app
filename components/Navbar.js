@@ -1,7 +1,7 @@
 import Link from "next/link";
-import Image from "next/Image"
+import Image from "next/image";
 import { useUser } from "../firebase/useUser";
-import Logo from "../public/clearcloset.png"
+import Logo from "../public/clearcloset.png";
 const Navbar = () => {
   const { user, logout } = useUser();
   console.log(user);
@@ -13,14 +13,18 @@ const Navbar = () => {
     >
       <div className={"flex gap-10 items-center"}>
         <Link href={"/"}>
-        <a><Image height = "40px" width = "20px" src={Logo} alt = "Clear Closet Logo"/></a>
+          <a>
+            <Image
+              height="40px"
+              width="20px"
+              src={Logo}
+              alt="Clear Closet Logo"
+            />
+          </a>
         </Link>
         <Link href={"/"}>
-          <div className={"font-bold "}>
-            Clear Closet
-          </div>
+          <div className={"font-bold "}>Clear Closet</div>
         </Link>
-        
 
         {user && (
           <Link
