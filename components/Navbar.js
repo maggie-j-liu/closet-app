@@ -23,7 +23,7 @@ const Navbar = () => {
           </a>
         </Link>
         <Link href={"/"}>
-          <a className={"font-bold"}>
+          <a className={"font-bold hover:text-indigo-600"}>
             Clear Closet
           </a>
         </Link>
@@ -38,7 +38,7 @@ const Navbar = () => {
               },
             }}
           >
-            <a className={"focus-ring rounded-sm"}>My Closet</a>
+            <a className={"focus-ring rounded-sm hover:text-indigo-600"}>My Closet</a>
           </Link>
         )}
         {!user && (
@@ -47,12 +47,12 @@ const Navbar = () => {
               pathname: "/closet",
             }}
           >
-            <a className={"focus-ring rounded-sm"}>My Closet</a>
+            <a className={"focus-ring rounded-sm hover:text-indigo-600"}>My Closet</a>
           </Link>
         )}
       </div>
       {!user && (
-        <div>
+        <div className={"hover:text-indigo-600"}>
           <Link href={"/auth"}>
             <a>Log In</a>
           </Link>
@@ -61,7 +61,7 @@ const Navbar = () => {
       {user && (
         <div className={"gap-10 flex"}>
           {user.name}
-          <button
+          <button className = {"hover:text-indigo-600"}
             alt="Logout"
             onClick={() => logout()}
           >
