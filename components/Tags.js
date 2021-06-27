@@ -1,7 +1,23 @@
 import React from "react";
 import { useTags } from "./TagsContext";
 
-const Tags = ({ tags, setTags, text }) => {
+const FakeTags = () => {
+  const widths = ["w-10", "w-12", "w-14", "w-16", "w-20", "w-24"];
+  return (
+    <>
+      {[...Array(Math.round(Math.random() * 15) + 10)].map((_, idx) => (
+        <div
+          className={`px-2 h-7 bg-gray-300 rounded-sm ${
+            widths[Math.floor(Math.random() * widths.length)]
+          }`}
+          key={idx}
+        ></div>
+      ))}
+    </>
+  );
+};
+
+const Tags = ({ tags, setTags, text, loading = false }) => {
   console.log("tags", tags);
   const [currTag, setCurrTag] = React.useState("");
   const handleChange = (e) => {
@@ -24,9 +40,14 @@ const Tags = ({ tags, setTags, text }) => {
   return (
     <div>
       <div className={"text-gray-900 font-medium"}>{text ?? "Tags"}</div>
-      <div className={"flex gap-2 flex-wrap mt-1.5"}>
-        {tags.map((tag, idx) => {
-          return (
+      <div
+        className={`flex gap-2 flex-wrap mt-1.5 ${
+          loading ? "animate-pulse" : ""
+        }`}
+      >
+        {loading && <FakeTags />}
+        {!loading &&
+          tags.map((tag, idx) => (
             <div
               className={"px-2 py-0.5 bg-indigo-100 rounded-sm text-indigo-900"}
               key={idx}
@@ -51,8 +72,7 @@ const Tags = ({ tags, setTags, text }) => {
                 </svg>
               </button>
             </div>
-          );
-        })}
+          ))}
       </div>
       <input
         type="text"
