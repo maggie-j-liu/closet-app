@@ -1,6 +1,21 @@
 import FirebaseAuth from "../components/auth/FirebaseAuth";
+import { useUser } from "../firebase/useUser";
+
 import Link from "next/link";
+import { useRouter } from 'next/router'; // next has its own router that we can use 
+
 const Auth = () => {
+  const { user } = useUser();
+  const router = useRouter();
+
+  if (user != null) {
+    console.log('user found');
+    router.push("/closet");
+    return (
+      <>
+      </>
+    );
+  }
   return (
     <div>
       <div
