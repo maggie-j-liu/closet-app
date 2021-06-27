@@ -8,21 +8,21 @@ const features = [
     icon: GlobeAltIcon,
   },
   {
-    name: 'Auto-suggested Tags',
-    description:
-      'Lorem ipsum, dolor sit amet consectetur adipisicing elit. Maiores impedit perferendis suscipit eaque, iste dolor cupiditate blanditiis ratione.',
-    icon: BookmarkIcon,
-  },
-  {
     name: 'Instant Upload',
     description:
-      'Lorem ipsum, dolor sit amet consectetur adipisicing elit. Maiores impedit perferendis suscipit eaque, iste dolor cupiditate blanditiis ratione.',
+      'Using Google\'s FireBase, image uploads come with no delay.',
     icon: LightningBoltIcon,
   },
   {
-    name: 'Simple Search',
+    name: 'Auto-suggested Tags',
     description:
-      'Lorem ipsum, dolor sit amet consectetur adipisicing elit. Maiores impedit perferendis suscipit eaque, iste dolor cupiditate blanditiis ratione.',
+      'Using visual artificial intelligence APIs, Clear Closet guarantees the most accurate and descriptive tags.',
+    icon: BookmarkIcon,
+  },
+  {
+    name: 'Search Efficiently',
+    description:
+      'When you want to find a specific type of clothing, enter your wanted tags right into the search engine, and we\'ll find the best match for you!',
     icon: SearchIcon,
   },
 ]
@@ -37,8 +37,7 @@ export default function Example() {
           A better way to manage your photos
           </p>
           <p className="mt-4 max-w-2xl text-xl text-gray-500 lg:mx-auto">
-            Lorem ipsum dolor sit amet consect adipisicing elit. Possimus magnam voluptatum cupiditate veritatis in
-            accusamus quisquam.
+            Managing your photos is difficult -- Clear Closet does it all for you!
           </p>
         </div>
 
