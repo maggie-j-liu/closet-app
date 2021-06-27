@@ -78,7 +78,7 @@ const Closet = ({ userId, userCloset }) => {
         <div>Icon of closet here</div>
       </div>
 
-      <div className={"w-3/4 mx-auto"}>
+      <div className={"py-5 w-3/4 mx-auto"}>
         <Tags text={"Search by tags"} tags={tags} setTags={setTags} />
       </div>
       <UploadModal />
