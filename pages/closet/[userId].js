@@ -77,10 +77,10 @@ const Closet = ({ userId, userCloset }) => {
     <div>
       <div
         className={
-          "bg-gradient-to-r from-indigo-100 via-indigo-200 to-blue-100 gap-10 flex w-full h-60 items-center justify-center px-20"
+          "bg-gradient-to-r from-indigo-100 via-indigo-200 to-blue-100 gap-10 flex w-full h-80 items-center justify-center px-20"
         }
       >
-        <div className={"text-5xl font-bold items-center"}>My Closet</div>
+        <div className={"text-5xl font-bold text-center"}>My Closet</div>
         <Image src={Logo} width="60px" height="120px" alt="Clear Closet Logo" />
       </div>
 
